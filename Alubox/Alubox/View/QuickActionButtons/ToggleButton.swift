@@ -10,7 +10,7 @@ struct ToggleButton: View {
         Button(action: action) {
             Image(systemName: systemImage)
                 .symbolRenderingMode(.palette)
-                .foregroundStyle(isActive ? Color(.white) : Color(.gray), isActive ? Color(.gray) : Color(.white))
+                .foregroundStyle(isActive ? Color(.white) : Color(.gray), .blue)
                 .font(.system(size: 25, weight: .bold))
                 //.shadow(color: Color.black.opacity(0.4), radius: 10, x: 0, y: 10)
         }

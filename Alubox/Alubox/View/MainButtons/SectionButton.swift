@@ -10,7 +10,7 @@ struct SectionButton: View {
             HStack(spacing: 15) {
                 Image(systemName: icon)
                     .symbolRenderingMode(.palette)
-                    .foregroundStyle(.white, .gray)
+                    .foregroundStyle(.white, .blue)
                     .font(.system(size: 25, weight: .regular))
 
                 Text(title)
@@ -19,7 +19,7 @@ struct SectionButton: View {
                 Spacer()
                 Image(systemName: "chevron.right")
                     .symbolRenderingMode(.palette)
-                    .foregroundStyle(.gray)
+                    .foregroundStyle(.blue)
                     .font(.system(size: 15, weight: .bold))
             }
             .padding(.vertical)

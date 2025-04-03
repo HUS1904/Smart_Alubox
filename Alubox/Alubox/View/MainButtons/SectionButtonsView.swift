@@ -19,14 +19,28 @@ struct SectionButtonsView: View {
             }
 
             Divider().background(Color.white.opacity(0.2))
-
-            SectionButton(title: "Location", icon: "location.fill") {}
+            
+            SectionButton(title: "Location", icon: "location.fill") {
+                withAnimation(.easeOut(duration: 0.5)) {
+                    viewModel.activeSection = .location
+                }
+            }
+            
             Divider().background(Color.white.opacity(0.2))
 
-            SectionButton(title: "Inventory", icon: "list.clipboard.fill") {}
+            SectionButton(title: "Inventory", icon: "list.clipboard.fill") {
+                withAnimation(.easeOut(duration: 0.5)) {
+                    viewModel.activeSection = .inventory
+                }
+            }
+
             Divider().background(Color.white.opacity(0.2))
 
-            SectionButton(title: "Specifications And Warranty", icon: "info.circle.fill") {}
+            SectionButton(title: "Specifications And Warranty", icon: "info.circle.fill") {
+                withAnimation(.easeOut(duration: 0.5)) {
+                    viewModel.activeSection = .specifications
+                }
+            }
         }
     }
 }

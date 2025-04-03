@@ -16,7 +16,7 @@ struct HeaderView: View {
                             .foregroundColor(.white)
                         Image(systemName: "chevron.down")
                             .symbolRenderingMode(.palette)
-                            .foregroundStyle(.white)
+                            .foregroundStyle(.blue)
                             .font(.system(size: 15, weight: .bold))
                     }
                 }
@@ -24,7 +24,7 @@ struct HeaderView: View {
                 HStack(spacing: 4) {
                     Image(systemName: "battery.75percent")
                         .symbolRenderingMode(.palette)
-                        .foregroundStyle(.gray, .white)
+                        .foregroundStyle(.white, .blue)
                         .font(.system(size: 18, weight: .bold))
                     Text("75%")
                         .font(.system(size: 18, weight: .bold))

@@ -1,37 +1,43 @@
-import SwiftUI
 import Foundation
+import SwiftUI
 
 enum ActiveSection {
-    case none
-    case controls
-    case climate
-    case location
-    case inventory
-    case specifications
+    case none, controls, climate, location, inventory, specifications
 }
 
 class MainViewModel: ObservableObject {
     @Published var activeSection: ActiveSection = .none
-    @Published var isDropdownOpen: Bool = false
-
+    @Published var isDropdownOpen = false
     @Published var alubox: Alubox = MockData.sampleBox
+
+    let bluetoothManager = BluetoothManager.shared
+
+    init() {
+        print("🔥 MainViewModel created — using shared BluetoothManager")
+    }
 
     func resetView() {
         activeSection = .none
     }
 
     func toggleLock() {
+        guard bluetoothManager.isReady else {
+            print("❌ Bluetooth not ready yet")
+            return
+        }
+
         alubox.isLocked.toggle()
+        let command = alubox.isLocked ? "close" : "open"
+        bluetoothManager.writeLockCommand(command)
     }
 
     func toggleLights() {
         alubox.lightsOn.toggle()
     }
-    
+
     func toggleFan() {
         alubox.fanOn.toggle()
     }
-
 
     func toggleDropdown() {
         withAnimation {

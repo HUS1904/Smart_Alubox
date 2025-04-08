@@ -5,7 +5,6 @@ struct MainView: View {
 
     var body: some View {
         ZStack {
-            // Fullscreen map mode
             if viewModel.activeSection == .location {
                 LocationView(viewModel: viewModel)
                     .transition(.move(edge: .bottom).combined(with: .opacity))
@@ -13,7 +12,6 @@ struct MainView: View {
             } else {
                 ScrollView {
                     VStack(spacing: 0) {
-                        // Header
                         if viewModel.activeSection == .none {
                             HeaderView(viewModel: viewModel)
                                 .padding(.top, 70)
@@ -34,50 +32,25 @@ struct MainView: View {
                             }
                         }
 
-                        // Hero image
-                        if viewModel.activeSection != .location {
-                            HeroImageView(imageName: viewModel.alubox.imageName)
-                                .padding(.top, viewModel.activeSection == .none ? -45 : 10)
-                                .animation(.easeOut(duration: 0.5), value: viewModel.activeSection)
-                        }
+                        HeroImageView(imageName: viewModel.alubox.imageName)
+                            .padding(.top, viewModel.activeSection == .none ? -45 : 10)
+                            .animation(.easeOut(duration: 0.5), value: viewModel.activeSection)
 
-                        // Dynamic Section Content
                         Group {
                             switch viewModel.activeSection {
                             case .controls:
-                                AnyView(
-                                    SolarChargingInfoView()
-                                        .padding(.top, 50)
-                                        .transition(.move(edge: .bottom).combined(with: .opacity))
-                                )
-
+                                AnyView(SolarChargingInfoView().padding(.top, 50))
                             case .climate:
-                                AnyView(
-                                    ClimateView()
-                                        .padding(.top, 50)
-                                        .transition(.move(edge: .bottom).combined(with: .opacity))
-                                )
-                                
+                                AnyView(ClimateView().padding(.top, 50))
                             case .inventory:
-                                    AnyView(
-                                        InventoryView() // 👈 create this file next
-                                            .padding(.top, 50)
-                                            .transition(.move(edge: .bottom).combined(with: .opacity))
-                                    )
-                                
+                                AnyView(InventoryView().padding(.top, 50))
                             case .specifications:
-                                AnyView(
-                                    SpecsView(viewModel: viewModel)
-                                        .padding(.top, 50)
-                                        .transition(.move(edge: .bottom).combined(with: .opacity))
-                                )
-
+                                AnyView(SpecsView(viewModel: viewModel).padding(.top, 50))
                             default:
                                 AnyView(EmptyView())
                             }
                         }
 
-                        // Quick Actions only for main and controls
                         if viewModel.activeSection == .none || viewModel.activeSection == .controls {
                             QuickActionsRowView(viewModel: viewModel)
                                 .frame(maxHeight: .infinity, alignment: viewModel.activeSection == .none ? .top : .bottom)
@@ -85,7 +58,6 @@ struct MainView: View {
                                 .animation(.easeOut(duration: 0.5), value: viewModel.activeSection)
                         }
 
-                        // Only show on main page
                         if viewModel.activeSection == .none {
                             SectionButtonsView(viewModel: viewModel)
                                 .padding(.top, 30)
@@ -98,13 +70,11 @@ struct MainView: View {
                 .zIndex(0)
             }
 
-            // Back button on top of LocationView
-            // Back button on top of LocationView
             if viewModel.activeSection == .location {
                 VStack {
                     HStack {
                         Button(action: {
-                            withAnimation(.easeOut(duration: 0.5)) {
+                            withAnimation {
                                 viewModel.resetView()
                             }
                         }) {
@@ -113,7 +83,7 @@ struct MainView: View {
                                 .foregroundColor(.white)
                                 .padding(10)
                                 .background(Color.black)
-                                .cornerRadius(10) // Rounded square
+                                .cornerRadius(10)
                         }
                         .padding(.leading, 10)
 
@@ -126,8 +96,6 @@ struct MainView: View {
                 .zIndex(1)
             }
 
-
-            // Dropdown
             if viewModel.isDropdownOpen {
                 DropdownOverlayView(viewModel: viewModel)
                     .zIndex(2)
@@ -135,5 +103,8 @@ struct MainView: View {
         }
         .background(Color(red: 0.156, green: 0.156, blue: 0.156))
         .edgesIgnoringSafeArea(.all)
+        .onAppear {
+            viewModel.bluetoothManager.ensureScanning()
+        }
     }
 }

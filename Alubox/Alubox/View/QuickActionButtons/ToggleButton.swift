@@ -12,7 +12,6 @@ struct ToggleButton: View {
                 .symbolRenderingMode(.palette)
                 .foregroundStyle(isActive ? Color(.white) : Color(.gray), .blue)
                 .font(.system(size: 25, weight: .bold))
-                //.shadow(color: Color.black.opacity(0.4), radius: 10, x: 0, y: 10)
         }
     }
 }
